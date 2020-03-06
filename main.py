@@ -8,6 +8,9 @@ pygame.display.set_caption('Happy Women\'s day')
 icon = pygame.image.load('icon.ico')
 pygame.display.set_icon(icon)
 clock = pygame.time.Clock()
+background = pygame.image.load('background.png').convert_alpha()
+rect_bg = background.get_rect()
+rect_bg.left, rect_bg.top = [0, 0]
 
 SCREEN_WIDTH, SCREEN_HEIGHT = screen.get_size()
 colors = {'White': [255, 255, 255],
@@ -19,9 +22,7 @@ rotation_speed = 2
 WIDTH_CENTER = SCREEN_WIDTH // 2
 HEIGHT_CENTER = SCREEN_HEIGHT // 2
 eight_orig = pygame.image.load('eight.png').convert_alpha()
-eight_orig.set_colorkey(colors['CWhite'])
 eight = eight_orig.copy()
-eight.set_colorkey(colors['CWhite'])
 rect = eight.get_rect()
 rect.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
 
@@ -30,10 +31,11 @@ state = True
 eight_pressed = False
 rotation_flag = True
 eight_visibility = True
+screen.fill(colors['White'])
 
 while state:
     clock.tick(FPS)
-    screen.fill(colors['CWhite'])
+    screen.blit(background, rect_bg)
     for event in pygame.event.get():
         if (event.type == pygame.locals.KEYDOWN) and (event.key == K_ESCAPE) or (event.type == pygame.QUIT):
             state = False
