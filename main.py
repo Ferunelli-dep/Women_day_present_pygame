@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import set_classes as set
+import random
 pygame.init()
 screen = pygame.display.set_mode((0, 0), flags=pygame.FULLSCREEN)
 pygame.display.set_caption('Happy Women\'s day')
@@ -38,6 +39,12 @@ flower_20 = set.Flowers('pics/flws/red.png', SCREEN_WIDTH, SCREEN_HEIGHT)
 flower_21 = set.Flowers('pics/flws/rose.png', SCREEN_WIDTH, SCREEN_HEIGHT)
 flower_22 = set.Flowers('pics/flws/violete.png', SCREEN_WIDTH, SCREEN_HEIGHT)
 
+love_text = pygame.image.load('pics/love_you.png').convert_alpha()
+rect_love = love_text.get_rect()
+rect_love.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT + 200
+time_place = random.randint(5, 10)
+love_state = False
+
 flowers = pygame.sprite.Group()
 flowers.add(flower_1, flower_2, flower_3, flower_4, flower_5, flower_6,
             flower_7, flower_8, flower_9, flower_10, flower_11,
@@ -55,7 +62,7 @@ rect_T2 = text_3.get_rect()
 colors = {'White': [255, 255, 255],
           'Black': [34, 34, 34],
           'CWhite': [255, 235, 255]}
-FPS = 80
+FPS = 90
 rotation = 0
 rotation_speed = 2
 WIDTH_CENTER = SCREEN_WIDTH // 2
@@ -82,6 +89,7 @@ y_2 = SCREEN_HEIGHT + 850
 visibility_1 = True
 visibility_2 = True
 visibility_3 = True
+love_y = SCREEN_HEIGHT + 200
 while state:
     clock.tick(FPS)
     flower_1.update()
@@ -128,21 +136,25 @@ while state:
                 y_1 -= 3
                 rect_T1.center = (SCREEN_WIDTH // 2, y_1)
             elif y_1 > T_Y_finish[1]:
-                y_1 -= 12
+                y_1 -= 10
                 rect_T1.center = (SCREEN_WIDTH // 2, y_1)
             else:
                 pos_state_1 = True
+                pos_state_0 = False
         if pos_state_1:
             visibility_1 = False
             if rect_T2.top > SCREEN_HEIGHT:
                 y_2 -= 7
                 rect_T2.center = (SCREEN_WIDTH // 2, y_2)
-            elif y_2 > -100:
-                y_2 -= 12
+            elif y_2 > -1000:
+                y_2 -= 7
                 rect_T2.center = (SCREEN_WIDTH // 2, y_2)
                 if y_2 > T_Y_finish[2] - 200:
                     visibility_2 = False
-            else: visibility_3 = False
+            else:
+                pos_state_1 = False
+                visibility_3 = False
+
         if visibility_1:
             screen.blit(text_1, rect_T0)
         if visibility_2:
@@ -152,8 +164,17 @@ while state:
     else:
         flowers.update()
         flowers.draw(screen)
-        flowers.update()
-        flowers.draw(screen)
+        flower_10.update()
+        if flower_10.iterations == time_place:
+            love_state = True
+        if love_state:
+            love_y -= 5
+            rect_love.center = (SCREEN_WIDTH // 2, love_y)
+            screen.blit(love_text, rect_love)
+            if love_y < -200:
+                love_state = False
+        # else:
+        #     love_state = False
     pygame.display.flip()
 
 pygame.quit()

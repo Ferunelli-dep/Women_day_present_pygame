@@ -8,6 +8,7 @@ class Flowers(pygame.sprite.Sprite):
         self.rect.x += self.speed_x
         self.rotate()
         if self.rect.top > self.height + 10:
+            self.iterations += 1
             self.rect.x = random.randrange(self.width - self.rect.width)
             self.rect.y = random.randrange(-200 - self.size, -self.size)
             self.speed = random.randrange(1, 4)
@@ -25,6 +26,7 @@ class Flowers(pygame.sprite.Sprite):
 
     def __init__(self, file, width, height):
         pygame.sprite.Sprite.__init__(self)
+        self.iterations = 1
         self.dir = file
         self.size = random.randint(200, 300)
         self.width, self.height = width, height
