@@ -55,7 +55,7 @@ rect_T2 = text_3.get_rect()
 colors = {'White': [255, 255, 255],
           'Black': [34, 34, 34],
           'CWhite': [255, 235, 255]}
-FPS = 60
+FPS = 80
 rotation = 0
 rotation_speed = 2
 WIDTH_CENTER = SCREEN_WIDTH // 2
