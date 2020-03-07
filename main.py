@@ -16,9 +16,9 @@ text_3 = pygame.image.load("pics/text_3.png").convert_alpha()
 pygame.display.set_icon(icon)
 rect_bg = background.get_rect()
 rect_bg.left, rect_bg.top = [0, 0]
-rect_T1 = text_1.get_rect()
-rect_T2 = text_2.get_rect()
-rect_T3 = text_3.get_rect()
+rect_T0 = text_1.get_rect()
+rect_T1 = text_2.get_rect()
+rect_T2 = text_3.get_rect()
 
 SCREEN_WIDTH, SCREEN_HEIGHT = screen.get_size()
 colors = {'White': [255, 255, 255],
@@ -32,16 +32,23 @@ HEIGHT_CENTER = SCREEN_HEIGHT // 2
 eight = eight_orig.copy()
 rect = eight.get_rect()
 rect.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
-rect_T1.center = SCREEN_WIDTH // 2, 250
-rect_T2.center = SCREEN_WIDTH // 2, 600
-rect_T3.center = SCREEN_WIDTH // 2, 850
+
+rect_T0.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT + 250
+rect_T1.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT + 1000
+rect_T2.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT + 1250
+T_Y_finish = [250, 600, 850]
+
+pos_state_0 = False
+pos_state_1 = False
 state = True
 eight_pressed = False
 rotation_flag = True
 eight_visibility = True
 screen.fill(colors['White'])
-y = 200
-y1 = 400
+y_0 = SCREEN_HEIGHT + 250
+y_1 = SCREEN_HEIGHT + 600
+y_2 = SCREEN_HEIGHT + 850
+
 while state:
     clock.tick(FPS)
     screen.blit(background, rect_bg)
@@ -76,9 +83,30 @@ while state:
         rect.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
         screen.blit(eight_orig, rect)
     else:
-        screen.blit(text_1, rect_T1)
-        screen.blit(text_2, rect_T2)
-        screen.blit(text_3, rect_T3)
+        if y_0 > T_Y_finish[0]:
+            y_0 -= 10
+            rect_T0.center = (SCREEN_WIDTH // 2, y_0)
+        else:
+            pos_state_0 = True
+        if pos_state_0:
+            if rect_T1.top > SCREEN_HEIGHT:
+                y_1 -= 1
+                rect_T1.center = (SCREEN_WIDTH // 2, y_1)
+            elif y_1 > T_Y_finish[1]:
+                y_1 -= 12
+                rect_T1.center = (SCREEN_WIDTH // 2, y_1)
+            else:
+                pos_state_1 = True
+        if pos_state_1:
+            if rect_T2.top > SCREEN_HEIGHT:
+                y_2 -= 3
+                rect_T2.center = (SCREEN_WIDTH // 2, y_2)
+            elif y_2 > T_Y_finish[2]:
+                y_2 -= 12
+                rect_T2.center = (SCREEN_WIDTH // 2, y_2)
+        screen.blit(text_1, rect_T0)
+        screen.blit(text_2, rect_T1)
+        screen.blit(text_3, rect_T2)
     pygame.display.flip()
 
 pygame.quit()
