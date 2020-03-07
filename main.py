@@ -9,9 +9,9 @@ clock = pygame.time.Clock()
 icon = pygame.image.load('pics/icon.ico')
 background = pygame.image.load('pics/background.png').convert_alpha()
 eight_orig = pygame.image.load('pics/eight_res.png').convert_alpha()
-text_1 = pygame.image.load("pics/text_1.png").conver_alpha()
-text_2 = pygame.image.load("pics/text_2.png").conver_alpha()
-text_3 = pygame.image.load("pics/text_3.png").conver_alpha()
+text_1 = pygame.image.load("pics/text_1.png").convert_alpha()
+text_2 = pygame.image.load("pics/text_2.png").convert_alpha()
+text_3 = pygame.image.load("pics/text_3.png").convert_alpha()
 
 pygame.display.set_icon(icon)
 rect_bg = background.get_rect()
@@ -32,7 +32,9 @@ HEIGHT_CENTER = SCREEN_HEIGHT // 2
 eight = eight_orig.copy()
 rect = eight.get_rect()
 rect.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
-rect_T1.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
+rect_T1.center = SCREEN_WIDTH // 2, 250
+rect_T2.center = SCREEN_WIDTH // 2, 600
+rect_T3.center = SCREEN_WIDTH // 2, 850
 state = True
 eight_pressed = False
 rotation_flag = True
@@ -43,7 +45,6 @@ y1 = 400
 while state:
     clock.tick(FPS)
     screen.blit(background, rect_bg)
-    screen.blit(text_1, rect_T1)
     for event in pygame.event.get():
         if (event.type == pygame.locals.KEYDOWN) and (event.key == K_ESCAPE) or (event.type == pygame.QUIT):
             state = False
@@ -75,7 +76,9 @@ while state:
         rect.center = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
         screen.blit(eight_orig, rect)
     else:
-        pass
+        screen.blit(text_1, rect_T1)
+        screen.blit(text_2, rect_T2)
+        screen.blit(text_3, rect_T3)
     pygame.display.flip()
 
 pygame.quit()
